@@ -10,7 +10,7 @@ import org.apache.kafka.common.serialization.StringSerializer;
 import java.util.Properties;
 import java.util.concurrent.ExecutionException;
 
-public class newOrderMain {
+public class NewOrderMain {
 
 
     public static void main(String[] args) throws ExecutionException, InterruptedException {
