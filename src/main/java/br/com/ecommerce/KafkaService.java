@@ -4,12 +4,13 @@ import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.common.serialization.StringDeserializer;
 
+import java.io.Closeable;
 import java.time.Duration;
 import java.util.Collections;
 import java.util.Properties;
 import java.util.UUID;
 
-public class KafkaService {
+public class KafkaService implements Closeable {
 
     private final KafkaConsumer<String, String> consumer;
     private  ConsumerFunction parse;
@@ -35,6 +36,12 @@ public class KafkaService {
         }
     }
 
+
+    @Override
+    public void close()  {
+        consumer.close();
+    }
+
     private static Properties properties(String groupId) {
 
         var properties = new Properties();
@@ -47,6 +54,7 @@ public class KafkaService {
         return properties;
 
     }
+
 
 }
 
