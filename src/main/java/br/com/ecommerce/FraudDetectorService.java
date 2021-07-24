@@ -2,6 +2,8 @@ package br.com.ecommerce;
 
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
+
+import java.util.Map;
 import java.util.Properties;
 import java.util.UUID;
 
@@ -12,7 +14,8 @@ public class FraudDetectorService {
         try (var service = new KafkaService<>(FraudDetectorService.class.getSimpleName(),
                 "ECOMMERCE_NEW_ORDER",
                 fraudService::parse,
-                Order.class)) {
+                Order.class,
+                Map.of())) {
             service.run();
         }
     }
