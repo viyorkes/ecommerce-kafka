@@ -44,9 +44,9 @@ public class FraudDetectorService {
         if(order.getAmount().compareTo(new BigDecimal("4500"))>=0){
             System.out.println("Order is a fraud!!!!");
             //in this model fraude happens when amount is >4500
-            orderDispatcher.send("ECOMMERCE_ORDER_REJECT", order.getUserId(),order);
+            orderDispatcher.send("ECOMMERCE_ORDER_REJECT", order.getEmail(),order);
         }else {
-            orderDispatcher.send("ECOMMERCE_ORDER_APPROVED", order.getUserId(),order);
+            orderDispatcher.send("ECOMMERCE_ORDER_APPROVED", order.getEmail(),order);
             System.out.println("your Order is aproved OK"+ order);
 
         }
