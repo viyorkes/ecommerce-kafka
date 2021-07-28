@@ -23,10 +23,10 @@ public class NewOrderMain {
                     var order = new Order(userId, orderId, amount, email);
 
                     var value = key + "123,1233,177";
-                    orderDispatcher.send("ECOMMERCE_NEW_ORDER", key, order);
+                    orderDispatcher.send("ECOMMERCE_NEW_ORDER", key,new CorrelationId(NewOrderMain.class.getSimpleName()), order);
 
                     var emailCode = "WE ARE PROCESSING YOUR ORDER";
-                    emailDispatcher.send("ECOMMERCE_SEND_EMAIL", key, emailCode);
+                    emailDispatcher.send("ECOMMERCE_SEND_EMAIL", key, new CorrelationId(NewOrderMain.class.getSimpleName()),emailCode);
                 }
             }
         }

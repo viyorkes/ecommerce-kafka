@@ -15,6 +15,8 @@ public class WebHttpService {
         context.addServlet(new ServletHolder(new GenerateAllReportsServlet()), "/admin/generate-reports");
 
 
+
+
         server.setHandler(context);
 
         server.start();

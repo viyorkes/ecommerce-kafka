@@ -1,12 +1,8 @@
 package br.com.ecommerce;
 
-import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
-
 import java.math.BigDecimal;
 import java.util.Map;
-import java.util.Properties;
-import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 
 public class FraudDetectorService {
@@ -24,7 +20,7 @@ public class FraudDetectorService {
 
     private final KafkaDispatcher<Order> orderDispatcher = new KafkaDispatcher<>();
 
-    private void parse(ConsumerRecord<String, Order> record)throws ExecutionException, InterruptedException {
+    private void parse(ConsumerRecord<String, Message<Order>> record)throws ExecutionException, InterruptedException {
         System.out.println("---------------------------------------");
         System.out.println("processing NewOrder");
         System.out.println(record.key());
@@ -38,15 +34,20 @@ public class FraudDetectorService {
             e.printStackTrace();
         }
 
+       var message= record.value();
+        var order= message.getPayload();
 
-       var order= record.value();
 
         if(order.getAmount().compareTo(new BigDecimal("4500"))>=0){
             System.out.println("Order is a fraud!!!!");
             //in this model fraude happens when amount is >4500
-            orderDispatcher.send("ECOMMERCE_ORDER_REJECT", order.getEmail(),order);
+            orderDispatcher.send("ECOMMERCE_ORDER_REJECT", order.getEmail(),
+                    message.getId().continueWith(FraudDetectorService.class.getSimpleName())
+                    ,order);
         }else {
-            orderDispatcher.send("ECOMMERCE_ORDER_APPROVED", order.getEmail(),order);
+            orderDispatcher.send("ECOMMERCE_ORDER_APPROVED", order.getEmail(),
+                    message.getId().continueWith(FraudDetectorService.class.getSimpleName())
+                    ,order);
             System.out.println("your Order is aproved OK"+ order);
 
         }

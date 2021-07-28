@@ -5,8 +5,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.math.BigDecimal;
-import java.util.UUID;
+
 import java.util.concurrent.ExecutionException;
 
 
@@ -24,11 +23,11 @@ import java.util.concurrent.ExecutionException;
             try {
 
 
-                batchDispatcher.send("SEND_MESSAGE_TO_ALL_USERS", "USER_GENERATE_READING_REPORT", "USER_GENERATE_READING_REPORT");
+                batchDispatcher.send("ECOMMERCE_SEND_MESSAGE_TO_ALL_USERS", "ECOMMERCE_USER_GENERATE_READING_REPORT",
+                        new CorrelationId(GenerateAllReportsServlet.class.getSimpleName()),
+                        "ECOMMERCE_USER_GENERATE_READING_REPORT");
 
-
-
-                System.out.println("Sent generate report to all usres");
+                System.out.println("Sent generate report to all users");
                 resp.setStatus(HttpServletResponse.SC_OK);
                 resp.getWriter().println("Report requests generated");
 
