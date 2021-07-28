@@ -12,6 +12,8 @@ public class WebHttpService {
         var context = new ServletContextHandler();
         context.setContextPath("/");
         context.addServlet(new ServletHolder(new NewOrderWeb()), "/new");
+        context.addServlet(new ServletHolder(new GenerateAllReportsServlet()), "/admin/generate-reports");
+
 
         server.setHandler(context);
 

@@ -28,6 +28,7 @@
         <module>common-kafka</module>
         <module>service-users</module>
         <module>service-web</module>
+        <module>service-reading-batch</module>
     </modules>
     <dependencies>
         <!-- https://mvnrepository.com/artifact/org.springframework.kafka/spring-kafka -->

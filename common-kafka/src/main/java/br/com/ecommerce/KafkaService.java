@@ -5,6 +5,7 @@ import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.common.serialization.StringDeserializer;
 
 import java.io.Closeable;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.time.Duration;
 import java.util.Collections;
@@ -45,13 +46,13 @@ public class KafkaService<T> implements Closeable {
                 for (var record : records) {
                     try {
                         parse.consumer(record);
-                    } catch (ExecutionException e) {
+                    } catch (ExecutionException | InterruptedException e) {
                         //i ll implement a place for save this log
-                        e.printStackTrace();
-                    } catch (InterruptedException e) {
                         e.printStackTrace();
                     } catch (SQLException throwables) {
                         throwables.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
 
                 }
